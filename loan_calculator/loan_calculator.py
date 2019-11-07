@@ -15,7 +15,7 @@ class LoanCalculator:
     ):
         if deposit > price:
             raise Exception(
-                "You do not need a loan if the deposit matches or exceeds the"
+                "You do not need a loan if the deposit matches or exceeds the "
                 "purchase price"
             )
         self._price = price
