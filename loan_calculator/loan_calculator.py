@@ -11,7 +11,7 @@ class LoanCalculator:
             self,
             price: float,
             interest_rate: float,
-            deposit: int = 0,
+            deposit: float = 0,
     ):
         if deposit > price:
             raise Exception(
@@ -42,13 +42,16 @@ class LoanCalculator:
         r = pow(1 + self.monthly_interest_rate, self._payment_period)
         upper = self.monthly_interest_rate * r
         lower = r - 1
-        div = upper / lower
-        self._monthly_payments = borrowed * div
+        if lower == 0:
+            self._monthly_payments = borrowed / self._payment_period
+        else:
+            div = upper / lower
+            self._monthly_payments = borrowed * div
         return self.monthly_payments
 
     @property
     def monthly_interest_rate(self):
-        return self._interest_rate / 12
+        return round(self._interest_rate / 12, 5)
 
     def calculate_loan_length(self, monthly_payments: float):
         self._monthly_payments = monthly_payments
